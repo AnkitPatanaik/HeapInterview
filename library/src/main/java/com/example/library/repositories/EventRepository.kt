@@ -12,11 +12,11 @@ class EventRepository(application: Application) {
         eventDao = EventDatabase.getDb(application).eventDao()
     }
 
-    fun addEvent(event: Event) {
+    suspend fun addEvent(event: Event) {
         eventDao.insert(event)
     }
 
-    fun uploadEvents() {
+    suspend fun uploadEvents() {
         val events = eventDao.getAllEvents()
 
         // upload events to Network

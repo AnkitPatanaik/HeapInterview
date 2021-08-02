@@ -9,7 +9,7 @@ object SDK {
 
     private var eventRepository: EventRepository? = null
 
-    fun logEvent(application: Application, location: String, action: String){
+    suspend fun logEvent(application: Application, location: String, action: String){
         if (eventRepository == null) {
             eventRepository = EventRepository(application)
         }

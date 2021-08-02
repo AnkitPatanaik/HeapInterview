@@ -8,12 +8,12 @@ import com.example.library.models.Event
 @Dao
 interface EventDao {
     @Query("SELECT * FROM Event")
-    fun getAllEvents() : List<Event>
+    suspend fun getAllEvents() : List<Event>
 
     @Query("DELETE FROM EVENT")
-    fun clear()
+    suspend fun clear()
 
     @Insert
-    fun insert(event: Event)
+    suspend fun insert(event: Event)
 
 }
