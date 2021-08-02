@@ -11,6 +11,8 @@ import android.view.Menu
 import android.view.MenuItem
 import com.example.heapinterview.databinding.ActivityMainBinding
 import com.example.library.SDK
+import com.example.library.repositories.EventRepository
+import com.example.library.repositories.MainViewModel
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -20,10 +22,12 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
+    private lateinit var viewModel: MainViewModel
 
     @DelicateCoroutinesApi
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        viewModel = MainViewModel()
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -37,10 +41,8 @@ class MainActivity : AppCompatActivity() {
         binding.fab.setOnClickListener { view ->
             Snackbar.make(view, "Uploaded events!", Snackbar.LENGTH_LONG)
                 .setAction("Action", null).show()
-
-            val x = this@MainActivity
             GlobalScope.async(Dispatchers.IO) {
-                SDK.uploadEvents(this@MainActivity.application, this@MainActivity)
+                viewModel.uploadEvents(application)
             }
         }
     }

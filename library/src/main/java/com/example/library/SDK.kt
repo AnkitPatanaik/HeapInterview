@@ -20,10 +20,10 @@ object SDK {
         eventRepository!!.addEvent(event)
     }
 
-    suspend fun uploadEvents(application: Application, lifecycleOwner: LifecycleOwner) {
+    suspend fun uploadEvents(application: Application) {
         if (eventRepository == null) {
             eventRepository = EventRepository(application)
         }
-        eventRepository!!.uploadEvents(application, lifecycleOwner)
+        eventRepository!!.uploadEvents(application)
     }
 }

@@ -3,15 +3,21 @@ package com.example.library.repositories
 import android.app.Application
 import android.content.Context
 import android.net.ConnectivityManager
-import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.Observer
+import android.util.Log
 import com.example.library.dao.EventDao
 import com.example.library.db.EventDatabase
 import com.example.library.models.Event
 import com.example.library.network.RetrofitClient
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.async
+import okhttp3.ResponseBody
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 
-class EventRepository(private val application: Application) {
+class EventRepository(application: Application) {
     var eventDao: EventDao
 
     init {
@@ -22,16 +28,26 @@ class EventRepository(private val application: Application) {
         eventDao.insert(event)
     }
 
-    suspend fun uploadEvents(application: Application, lifecycleOwner: LifecycleOwner) {
+    suspend fun uploadEvents(application: Application) {
         if (verifyAvailableNetwork(application)) {
             val events = eventDao.getAllEvents()
 
-//            events.observe(lifecycleOwner, Observer {
-//                // upload events to Network
-//                RetrofitClient.client.uploadEvents(it)
-//            })
-            RetrofitClient.client.uploadEvents(events)
-            eventDao.clear()
+            val call = RetrofitClient.client.uploadEvents(events)
+            // using retrofit enqueue for simplicity. can use any async network handling here
+            call.enqueue(object : Callback<ResponseBody> {
+                override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+                    Log.d("EventRepository", "successfully uploaded events")
+                    // clear db once they're uploaded to network
+                    GlobalScope.async(Dispatchers.IO) {
+                        eventDao.clear()
+                    }
+                }
+
+                override fun onFailure(call: Call<ResponseBody>, t: Throwable?) {
+                    Log.e("EventRepository", t.toString())
+                    Log.d("EventRepository", "failed to upload events :(")
+                }
+            })
         }
     }
 
