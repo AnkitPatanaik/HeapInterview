@@ -1,6 +1,7 @@
 package com.example.library
 
 import android.app.Application
+import androidx.lifecycle.LifecycleOwner
 import com.example.library.models.Event
 import com.example.library.repositories.EventRepository
 import java.util.*
@@ -17,5 +18,12 @@ object SDK {
         val event = Event(uuid, location, action, Date().time.toString())
 
         eventRepository!!.addEvent(event)
+    }
+
+    suspend fun uploadEvents(application: Application, lifecycleOwner: LifecycleOwner) {
+        if (eventRepository == null) {
+            eventRepository = EventRepository(application)
+        }
+        eventRepository!!.uploadEvents(application, lifecycleOwner)
     }
 }
