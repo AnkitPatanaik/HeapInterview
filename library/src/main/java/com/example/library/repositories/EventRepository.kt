@@ -1,11 +1,16 @@
 package com.example.library.repositories
 
+import android.app.Application
 import com.example.library.dao.EventDao
+import com.example.library.db.EventDatabase
 import com.example.library.models.Event
-import toothpick.ktp.delegate.inject
 
-class EventRepository {
-    private val eventDao: EventDao by inject()
+class EventRepository(application: Application) {
+    var eventDao: EventDao
+
+    init {
+        eventDao = EventDatabase.getDb(application).eventDao()
+    }
 
     fun addEvent(event: Event) {
         eventDao.insert(event)
