@@ -1,6 +1,17 @@
 # Heap TakeHome Project
 August 2, 2021
 
+### SDK
+- The SDK was built trying to follow a clean architecture, similar to MVVM.
+
+logEvent(application: Application, location: String, action: String)
+- Use this function to track an action in a particular location in the code
+i.e. logEvent(applicationContext, "MyActivity", "button pressed")
+
+uploadEvents(application: Application)
+- Use this function when you want to upload your events to the backend service.
+i.e. uploadEvents(applicationContext)
+
 ### Usage
 - The core of my SDK is to log events via the SDK object, and then store them in a Room DB. The user
 then has the choice to upload them on demand (I decided to just have it on a button). This could be
@@ -15,6 +26,11 @@ Fragment's onCreate, onResume, onPause, onStop, onDestroy.
 events if they want. For these calls, it is on the user to provide a CoroutineScope (or other async
 method if not using coroutines) to run the logEvent operation.
 
+##
+Libraries
+- Networking: OKHttp, Retrofit
+- Database: Room
+- UI Code: Mostly default Android Studio App
 
 ## Things I would have added with more time
 ### Dependency Injection
