@@ -1,4 +1,4 @@
-package com.example.library.repositories
+package com.example.heapinterview
 
 import android.app.Application
 import androidx.lifecycle.ViewModel
