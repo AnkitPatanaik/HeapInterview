@@ -17,13 +17,17 @@ abstract class EventDatabase : RoomDatabase() {
 
         fun getDb(context: Context) : EventDatabase {
             val i = instance
-            if (i!= null) {
+            if (i != null) {
                 return i
             }
 
-            synchronized(Event::class.java) {
+            synchronized(EventDatabase::class.java) {
                 if (instance == null) {
-                    instance = Room.databaseBuilder(context.applicationContext, EventDatabase::class.java, "Event_DB")
+                    instance = Room.databaseBuilder(
+                        context.applicationContext,
+                        EventDatabase::class.java,
+                        "Event_DB"
+                    )
                         .setJournalMode(JournalMode.WRITE_AHEAD_LOGGING)
                         .build()
                 }

@@ -7,17 +7,21 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import com.example.heapinterview.databinding.FragmentFirstBinding
+import com.example.library.views.AnalyticsFragment
 
 /**
  * A simple [Fragment] subclass as the default destination in the navigation.
  */
-class FirstFragment : Fragment() {
+class FirstFragment : AnalyticsFragment() {
 
     private var _binding: FragmentFirstBinding? = null
 
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
+    override fun getName(): String {
+        return "FIRST"
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

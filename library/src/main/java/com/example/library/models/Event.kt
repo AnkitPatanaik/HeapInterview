@@ -5,7 +5,7 @@ import androidx.room.PrimaryKey
 
 // add action, type, description etc later?
 @Entity
-data class Event(@PrimaryKey private val id: String,
-                 private val location: String,
-                 private val action: String,
-                 private val timestamp: String)
+data class Event(@PrimaryKey val id: String,
+                 val location: String,
+                 val action: String,
+                 val timestamp: String)

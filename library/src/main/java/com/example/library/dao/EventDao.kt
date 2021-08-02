@@ -8,7 +8,7 @@ import com.example.library.models.Event
 @Dao
 interface EventDao {
     @Query("SELECT * FROM Event")
-    fun getAllEvents()
+    fun getAllEvents() : List<Event>
 
     @Query("DELETE FROM EVENT")
     fun clear()
