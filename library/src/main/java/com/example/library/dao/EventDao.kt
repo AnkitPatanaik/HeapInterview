@@ -10,6 +10,9 @@ interface EventDao {
     @Query("SELECT * FROM Event")
     fun getAllEvents()
 
+    @Query("DELETE FROM EVENT")
+    fun clear()
+
     @Insert
     fun insert(event: Event)
 
