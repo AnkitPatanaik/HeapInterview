@@ -4,11 +4,11 @@ August 2, 2021
 ### SDK
 - The SDK was built trying to follow a clean architecture, similar to MVVM.
 
-logEvent(application: Application, location: String, action: String)
+_logEvent(application: Application, location: String, action: String)_
 - Use this function to track an action in a particular location in the code
 i.e. logEvent(applicationContext, "MyActivity", "button pressed")
 
-uploadEvents(application: Application)
+_uploadEvents(application: Application)_
 - Use this function when you want to upload your events to the backend service.
 i.e. uploadEvents(applicationContext)
 
@@ -26,8 +26,7 @@ Fragment's onCreate, onResume, onPause, onStop, onDestroy.
 events if they want. For these calls, it is on the user to provide a CoroutineScope (or other async
 method if not using coroutines) to run the logEvent operation.
 
-##
-Libraries
+### Libraries
 - Networking: OKHttp, Retrofit
 - Database: Room
 - UI Code: Mostly default Android Studio App
@@ -39,6 +38,6 @@ cleaner (i.e. not passing application contexts and repositories around via const
 having a tough time setting up Toothpick (the DI library I am familiar with). If I had a couple more
 hours to spend, this is something I would have added. As it makes things a lot easier to test + readable
 
-###Testing
+### Testing
 - I decide to leave out tests for the sake of time. Without a DI library, objects get difficult to mock.
 
