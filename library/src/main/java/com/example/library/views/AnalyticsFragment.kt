@@ -10,21 +10,37 @@ import kotlinx.coroutines.async
 
 abstract class AnalyticsFragment() : Fragment() {
 
+    private fun log(action: String) {
+        GlobalScope.async(Dispatchers.IO) {
+            SDK.logEvent(activity!!.application, getName(), action)
+        }
+    }
+
     @DelicateCoroutinesApi
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        GlobalScope.async(Dispatchers.IO) {
-            SDK.logEvent(activity!!.application, getName(), "onCreate")
-        }
+        log("onCreate")
+    }
+
+    override fun onPause() {
+        super.onPause()
+        log("onPause")
+    }
+
+    override fun onResume() {
+        super.onResume()
+        log("onResume")
+    }
+
+    override fun onStop() {
+        super.onStop()
+        log("onStop")
     }
 
     @DelicateCoroutinesApi
     override fun onDestroy() {
         super.onDestroy()
-
-        GlobalScope.async(Dispatchers.IO) {
-            SDK.logEvent(activity!!.application, getName(), "onDestroy")
-        }
+        log("onDestroy")
     }
 
     // name of Fragment
